@@ -384,6 +384,12 @@ def generate_full_theme_css(colors: Dict[str, str], author: str) -> str:
 [class*="base_"],
 [class*="layout_"],
 [class*="scrollerBase_"],
+[class*="scroller_"],
+[class*="stack_"],
+[class*="itemsContainer_"],
+[class*="tutorialContainer_"],
+[class*="listItem_"],
+[class*="listItemWrapper_"],
 [class*="standardSidebarView_"],
 [class*="contentRegion_"],
 [class*="contentRegionScroller_"],
@@ -420,6 +426,8 @@ button[class*="button_"][class*="colorWhite_"]:hover {{
 
 /* lookFilled + colorBrand = real CTA buttons (Save, Login, Join, etc.) */
 button[class*="button_"][class*="lookFilled_"][class*="colorBrand_"],
+button[class*="button_"][class*="lookFilled_"][class*="colorBrand_"] [class*="contents_"],
+button[class*="button_"][class*="lookFilled_"][class*="colorBrand_"] [class*="label_"],
 [class*="lookFilled_"][class*="colorBrand_"] {{
   background-color: var(--dank-primary) !important;
   color: #100e13 !important;
@@ -431,9 +439,26 @@ button[class*="button_"][class*="lookFilled_"][class*="colorBrand_"]:hover,
 
 /* Destructive buttons */
 button[class*="button_"][class*="colorRed_"],
-button[class*="button_"][class*="colorDanger_"] {{
-  background-color: rgba(240, 71, 71, 0.85) !important;
+button[class*="button_"][class*="colorDanger_"],
+button[class*="button_"][class*="colorRed_"] [class*="contents_"],
+button[class*="button_"][class*="colorDanger_"] [class*="contents_"],
+button[class*="button_"][class*="colorRed_"] [class*="label_"],
+button[class*="button_"][class*="colorDanger_"] [class*="label_"] {{
+  background-color: #f04747 !important;
   color: #ffffff !important;
+}}
+
+/* Secondary / Primary (Grey) buttons - e.g. Reply */
+button[class*="button_"][class*="lookFilled_"][class*="colorPrimary_"],
+button[class*="button_"][class*="lookFilled_"][class*="colorGrey_"],
+button[class*="button_"][class*="lookFilled_"][class*="colorPrimary_"] [class*="contents_"],
+button[class*="button_"][class*="lookFilled_"][class*="colorPrimary_"] [class*="label_"] {{
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}}
+button[class*="button_"][class*="lookFilled_"][class*="colorPrimary_"]:hover,
+button[class*="button_"][class*="lookFilled_"][class*="colorGrey_"]:hover {{
+  background-color: rgba(255, 255, 255, 0.15) !important;
 }}
 
 /* Channel/DM list rows - reset to transparent, hover via Discord's native var */
@@ -463,14 +488,18 @@ button[class*="button_"][class*="colorDanger_"] {{
    - blobContainer_e5445c: SVG blob wrapper (note capital C, not caught by container_)
    - childWrapper__6e9f8: acronym fallback for servers without icons
    - circleIconButton__5bc7e: "Add Server" / "Discover" buttons */
-[class^="guilds_"] [class*="scroller_"],
-[class^="guilds_"] [class*="scrollerBase_"],
-[class^="guilds_"] [class*="tree_"],
+[class*="guilds_"] [class*="scroller_"],
+[class*="guilds_"] [class*="scrollerBase_"],
+[class*="guilds_"] [class*="tree_"],
+[class*="guilds_"] [class*="itemsContainer_"],
+[class*="guilds_"] [class*="stack_"],
 [class*="guildsnav_"],
 [class*="listNavigator_"],
 [class*="listItem_"],
 [class*="blobContainer_"],
 [class*="childWrapper_"],
+[class*="tutorialContainer_"],
+[class*="listItemWrapper_"],
 [class*="folderGroup_"],
 [class*="folderButton_"] {{
   background-color: var(--dank-bg-main) !important;
@@ -480,6 +509,12 @@ button[class*="button_"][class*="colorDanger_"] {{
 [class*="childWrapper_"][class*="acronym_"] {{
   background-color: rgba(255, 255, 255, 0.08) !important;
   color: var(--dank-text-normal) !important;
+}}
+
+/* Discord Home button (Logo) background = Accent Color */
+[data-list-item-id="guildsnav___home"] [class*="childWrapper_"] {{
+  background-color: var(--dank-primary) !important;
+  color: #100e13 !important;
 }}
 
 /* "Add Server" / "Discover" circle icons */
@@ -495,6 +530,51 @@ button[class*="button_"][class*="colorDanger_"] {{
   {t_sidebar}
   border-radius: var(--radius-l);
   margin: 8px 4px;
+}}
+/* Hide scrollbar in Channel List */
+[class^="sidebar_"] [class*="scroller_"]::-webkit-scrollbar {{
+  display: none !important;
+  width: 0 !important;
+}}
+/* Channel Names & Links Visibility */
+[class*="sidebar_"] [class*="name_"],
+[class*="sidebar_"] [class*="link_"] [class*="name_"] {{
+  color: var(--interactive-normal) !important;
+}}
+[class*="sidebar_"] [class*="link_"]:hover [class*="name_"] {{
+  color: var(--interactive-hover) !important;
+}}
+[class*="sidebar_"] [class*="link_"][class*="modeSelected_"] [class*="name_"] {{
+  color: var(--interactive-active) !important;
+}}
+
+/* Server Boost Goal & Progress Bars */
+div[class*="container_"][class*="containerWithMargin_"] {{
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: var(--radius-m) !important;
+  margin: 12px !important;
+  border: 1px solid rgba({hex_to_rgb(primary)}, 0.4) !important;
+  padding: 12px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+  position: relative !important;
+}}
+[class*="progressContainer_"] {{
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border-radius: 10px !important;
+  height: 8px !important;
+}}
+[class*="progress_"] {{
+  background-color: var(--dank-primary) !important;
+  height: 8px !important;
+  border-radius: 10px !important;
+}}
+div[class*="container_"][class*="containerWithMargin_"] [class*="text_"] {{
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+}}
+[class*="boostCountText_"] {{
+  color: var(--dank-primary) !important;
 }}
 
 /* User Area (Bottom Left) */
@@ -583,7 +663,6 @@ button[class*="button_"][class*="colorDanger_"] {{
 [class*="header_"],
 [class*="searchBar_"],
 [class*="search_"],
-[class*="scroller_"],
 [class*="container_"] > [class*="nav_"],
 [class*="themed_"],
 [class*="children_"] {{
