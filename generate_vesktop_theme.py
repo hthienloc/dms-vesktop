@@ -511,6 +511,12 @@ button[class*="button_"][class*="lookFilled_"][class*="colorGrey_"]:hover {{
   color: var(--dank-text-normal) !important;
 }}
 
+/* Reset backgrounds for text-only components to prevent unintended highlights */
+[class*="title_"],
+[class*="heading-"] {{
+  background-color: transparent !important;
+}}
+
 /* Discord Home button (Logo) background = Accent Color */
 [data-list-item-id="guildsnav___home"] [class*="childWrapper_"] {{
   background-color: var(--dank-primary) !important;
