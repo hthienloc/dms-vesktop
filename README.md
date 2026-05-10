@@ -18,12 +18,19 @@ A Python script that generates a unified **Material Design** CSS theme for [Vesk
 
 ## Quick Installation
 
+### One-liner (recommended)
+Run this command to generate and apply the theme instantly:
 ```bash
-# 1. Clone the repo
+curl -sSL https://raw.githubusercontent.com/hthienloc/dms-vesktop/main/generate_vesktop_theme.py | python3
+```
+
+### Manual Installation
+```bash
+# Clone the repo
 git clone https://github.com/hthienloc/dms-vesktop.git
 cd dms-vesktop
 
-# 2. Run the generator (no dependencies needed)
+# Run the generator
 python3 generate_vesktop_theme.py
 ```
 
