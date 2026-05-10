@@ -511,9 +511,14 @@ button[class*="button_"][class*="lookFilled_"][class*="colorGrey_"]:hover {{
   color: var(--dank-text-normal) !important;
 }}
 
-/* Reset backgrounds for text-only components to prevent unintended highlights */
+/* Reset backgrounds for all common text-based components to prevent unintended highlights */
 [class*="title_"],
-[class*="heading-"] {{
+[class*="heading-"],
+[class*="text_"],
+[class*="label_"],
+[class*="contents_"],
+[class*="content_"],
+[class*="defaultColor_"] {{
   background-color: transparent !important;
 }}
 
