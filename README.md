@@ -2,6 +2,8 @@
 
 A Python script that generates a unified **Material Design** CSS theme for [Vesktop](https://github.com/Vencord/Vesktop) (Discord), automatically sourcing colors from your [Dank Material Shell](https://github.com/dankmatshell/dms) configuration.
 
+![Screenshot](screenshot.png)
+
 ## Features
 
 - 🎨 **Auto-synced colors** — reads palette from `~/.cache/DankMaterialShell/dms-colors.json` and wallpaper from session state
@@ -18,23 +20,17 @@ A Python script that generates a unified **Material Design** CSS theme for [Vesk
 
 ## Quick Installation
 
-### One-liner (recommended)
-Run this command to generate and apply the theme instantly:
 ```bash
-curl -sSL https://raw.githubusercontent.com/hthienloc/dms-vesktop/main/generate_vesktop_theme.py | python3
-```
-
-### Manual Installation
-```bash
-# Clone the repo
+# 1. Clone the repo
 git clone https://github.com/hthienloc/dms-vesktop.git
 cd dms-vesktop
 
-# Run the generator
+# 2. Run the generator (no dependencies needed)
 python3 generate_vesktop_theme.py
 ```
 
 The script auto-detects your Vesktop themes directory:
+
 - **Flatpak:** `~/.var/app/dev.vencord.Vesktop/config/vesktop/themes/`
 - **Native:** `~/.config/vesktop/themes/`
 

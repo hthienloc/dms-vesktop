@@ -303,10 +303,10 @@ def generate_full_theme_css(colors: Dict[str, str], author: str) -> str:
         bg_floating_val = f"rgba({hex_to_rgb(bg_secondary)}, {floating_opacity})"
     else:
         bg_primary_val = "var(--dank-bg-main)"
-        bg_secondary_val = "var(--dank-bg-main)"
-        bg_secondary_alt_val = "var(--dank-bg-main)"
-        bg_tertiary_val = "var(--dank-bg-main)"
-        bg_floating_val = "var(--dank-bg-main)"
+        bg_secondary_val = "var(--dank-bg-secondary)"
+        bg_secondary_alt_val = "var(--dank-bg-secondary-alt)"
+        bg_tertiary_val = "var(--dank-bg-tertiary)"
+        bg_floating_val = "var(--dank-bg-secondary)"
 
     css += f"""
 /* ===== Discord Theme Variables - Full Override ===== */
@@ -380,7 +380,7 @@ def generate_full_theme_css(colors: Dict[str, str], author: str) -> str:
 [class*="layer_"],
 [class*="chat_"],
 [class*="content_"],
-[class*="container_"],
+[class*="container_"]:not([class*="containerWithMargin_"]),
 [class*="base_"],
 [class*="layout_"],
 [class*="scrollerBase_"],
@@ -395,8 +395,13 @@ def generate_full_theme_css(colors: Dict[str, str], author: str) -> str:
 [class*="contentRegionScroller_"],
 [class*="privateChannels_"],
 [class*="sidebarRegion_"],
-[class*="form_"],
-[class*="tabBody_"],
+[class*="memberSidebarSection_"],
+[class*="memberContainer_"],
+[class*="containerCompact_"],
+[class*="textContainer_"],
+[class*="messageContainer_"],
+[class*="contentContainer_"],
+[class*="exampleMessage_"],
 [class*="root_"] {{
   {t_guilds}
 }}
@@ -542,6 +547,9 @@ button[class*="button_"][class*="lookFilled_"][class*="colorGrey_"]:hover {{
   border-radius: var(--radius-l);
   margin: 8px 4px;
 }}
+[class^="sidebar_"]::after {{
+  background-color: var(--dank-bg-main) !important;
+}}
 /* Hide scrollbar in Channel List */
 [class^="sidebar_"] [class*="scroller_"]::-webkit-scrollbar {{
   display: none !important;
@@ -557,35 +565,6 @@ button[class*="button_"][class*="lookFilled_"][class*="colorGrey_"]:hover {{
 }}
 [class*="sidebar_"] [class*="link_"][class*="modeSelected_"] [class*="name_"] {{
   color: var(--interactive-active) !important;
-}}
-
-/* Server Boost Goal & Progress Bars */
-div[class*="container_"][class*="containerWithMargin_"] {{
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border-radius: var(--radius-m) !important;
-  margin: 12px !important;
-  border: 1px solid rgba({hex_to_rgb(primary)}, 0.4) !important;
-  padding: 12px !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
-  position: relative !important;
-}}
-[class*="progressContainer_"] {{
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  border-radius: 10px !important;
-  height: 8px !important;
-}}
-[class*="progress_"] {{
-  background-color: var(--dank-primary) !important;
-  height: 8px !important;
-  border-radius: 10px !important;
-}}
-div[class*="container_"][class*="containerWithMargin_"] [class*="text_"] {{
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
-}}
-[class*="boostCountText_"] {{
-  color: var(--dank-primary) !important;
 }}
 
 /* User Area (Bottom Left) */
@@ -610,16 +589,110 @@ div[class*="container_"][class*="containerWithMargin_"] [class*="text_"] {{
 }}
 
 /* Member List */
-[class^="membersWrap_"],
-[class^="container_"] > [class^="members_"] {{
+[class*="membersWrap_"],
+[class*="container_"] > [class*="members_"] {{
   {t_sidebar}
   border-radius: var(--radius-l);
   margin: 8px 8px 8px 4px;
 }}
 
+/* New Messages / Jump to Present Bars */
+[class*="newMessagesBar_"],
+[class*="jumpToPresentBar_"] {{
+  background-color: var(--dank-primary) !important;
+  border-radius: var(--radius-m);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  color: #100e13 !important;
+}}
+
+[class*="newMessagesBar_"] {{
+  inset: 8px 8px auto 8px !important;
+}}
+
+[class*="jumpToPresentBar_"] {{
+  inset: auto 8px 8px 8px !important;
+}}
+
+[class*="newMessagesBar_"] [class*="barButtonBase_"],
+[class*="newMessagesBar_"] [class*="span_"],
+[class*="newMessagesBar_"] [class*="markAsReadText_"],
+[class*="newMessagesBar_"] [class*="barButtonIcon_"],
+[class*="jumpToPresentBar_"] [class*="barButtonBase_"],
+[class*="jumpToPresentBar_"] [class*="barButtonMain_"] {{
+  color: #100e13 !important;
+}}
+
+/* Booster Card & Promotional Containers */
+[class*="memberSidebarSection_"],
+[class*="containerWithMargin_"],
+[class*="inner_"][class*="containerWithMargin_"] {{
+  background-color: var(--dank-primary) !important;
+  background: var(--dank-primary) !important;
+  border-radius: var(--radius-m);
+  padding: 12px;
+  margin: 12px 8px;
+  color: #100e13 !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}}
+
+/* Ensure all text inside these accent sections is dark */
+[class*="memberSidebarSection_"] [class*="text-"],
+[class*="memberSidebarSection_"] [class*="defaultColor_"],
+[class*="memberSidebarSection_"] [class*="username_"],
+[class*="memberSidebarSection_"] a,
+[class*="containerWithMargin_"] [class*="text-"],
+[class*="containerWithMargin_"] [class*="defaultColor_"],
+[class*="containerWithMargin_"] a {{
+  color: #100e13 !important;
+}}
+
+/* Buttons inside these accent sections use the main background */
+[class*="memberSidebarSection_"] button,
+[class*="containerWithMargin_"] button,
+[class*="button_"][class*="primary_"][class*="hasText_"] {{
+  background-color: var(--dank-bg-main) !important;
+  color: var(--header-primary) !important;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}}
+
+[class*="memberSidebarSection_"] button:hover,
+[class*="containerWithMargin_"] button:hover,
+[class*="button_"][class*="primary_"][class*="hasText_"]:hover {{
+  transform: scale(1.02);
+  background-color: var(--dank-bg-secondary) !important;
+}}
+
+/* Ensure button text/icons are correctly colored (White system text) */
+[class*="memberSidebarSection_"] button [class*="contents_"],
+[class*="containerWithMargin_"] button [class*="contents_"],
+[class*="button_"][class*="primary_"][class*="hasText_"] [class*="contents_"],
+[class*="memberSidebarSection_"] button svg,
+[class*="containerWithMargin_"] button svg,
+[class*="button_"][class*="primary_"][class*="hasText_"] svg {{
+  color: var(--header-primary) !important;
+}}
+
+/* Remove gradients and conflicting inner backgrounds */
+[class*="memberGradientOverlay_"],
+[class*="memberContainer_"],
+[class*="containerCompact_"],
+[class*="textContainer_"],
+[class*="messageContainer_"],
+[class*="contentContainer_"],
+[class*="exampleMessage_"],
+[class*="inner_"][class*="containerWithMargin_"] {{
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}}
+
 /* Input Area Glass */
 [class^="channelTextArea_"] {{
   {t_transparent}
+  border-radius: var(--radius-l);
+  margin-bottom: 24px;
   padding: 0 16px;
 }}
 [class^="scrollableContainer_"] {{
@@ -678,6 +751,9 @@ div[class*="container_"][class*="containerWithMargin_"] [class*="text_"] {{
 [class*="themed_"],
 [class*="children_"] {{
   {t_transparent}
+}}
+[class*="children_"]::after {{
+  background-color: var(--dank-bg-main) !important;
 }}
 """
     return css
